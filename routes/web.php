@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ContactController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard/index',[ContactController::class,'index'])->name('contacts.index');
+Route::get('/contacts/create',[ContactController::class,'create'])->name('contacts.create');
+Route::post('/contacts/store',[ContactController::class,'store'])->name('contacts.store');
+Route::get('/contacts/{id}/edit',[ContactController::class,'edit'])->name('contacts.edit');
+Route::put('/contacts/{id}/update',[ContactController::class,'update'])->name('contacts.update');
+Route::delete('/contacts/{id}/delete',[ContactController::class,'destroy'])->name('contacts.delete');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

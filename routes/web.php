@@ -18,13 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard/index',[ContactController::class,'index'])->name('contacts.index');
-Route::get('/contacts/create',[ContactController::class,'create'])->name('contacts.create');
-Route::post('/contacts/store',[ContactController::class,'store'])->name('contacts.store');
-Route::get('/contacts/{id}/edit',[ContactController::class,'edit'])->name('contacts.edit');
-Route::put('/contacts/{id}/update',[ContactController::class,'update'])->name('contacts.update');
-Route::delete('/contacts/{id}/delete',[ContactController::class,'destroy'])->name('contacts.delete');
-Route::get('/contacts/{id}/show',[ContactController::class,'show'])->name('contacts.show');
 
 
 Route::get('/dashboard', function () {
@@ -32,6 +25,17 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/search_data',[ContactController::class, 'search_data']);
+    Route::get('/dashboard/index',[ContactController::class,'index'])->name('contacts.index');
+    Route::get('/contacts/create',[ContactController::class,'create'])->name('contacts.create');
+    Route::post('/contacts/store',[ContactController::class,'store'])->name('contacts.store');
+    Route::get('/contacts/{id}/edit',[ContactController::class,'edit'])->name('contacts.edit');
+    Route::put('/contacts/{id}/update',[ContactController::class,'update'])->name('contacts.update');
+    Route::delete('/contacts/{id}/delete',[ContactController::class,'destroy'])->name('contacts.delete');
+    Route::get('/contacts/{id}/show',[ContactController::class,'show'])->name('contacts.show');
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

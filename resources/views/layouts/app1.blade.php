@@ -27,7 +27,8 @@
             <!-- Links -->
             <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link text-light" href="/dashboard">Home</a>
+                <a class="nav-link text-light" style="float:left" href="/dashboard">Home</a>
+                <a class="nav-link text-light" style="float:right" href="/dashboard/index">Contacts</a>
             </li>
             </ul>
         </nav>

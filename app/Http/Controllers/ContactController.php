@@ -6,14 +6,28 @@ use App\Models\Contact;
 
 use Illuminate\Http\Request;
 
+use DB;
+
 class ContactController extends Controller
 {
-    public function index()
+
+    public function search_data(Request $request)
     {
         
+        $data = $request->input('search');
+
+        $contacts= DB::table('contacts')->where('name','like','%'. $data . '%')->
+        orWhere('email','like','%'. $data . '%')->orWhere('phone','like','%'. $data . '%')
+        ->get();
+        return view('contacts.index',compact('contacts'));
         
-        return view('contacts.index',['contacts'=>Contact::latest()->paginate(5)]);
     }
+
+    public function index()
+    {
+        return view('contacts.index',['contacts'=>Contact::latest()->get()]);
+    }
+
     public function create()
     {
         return view('contacts.create');

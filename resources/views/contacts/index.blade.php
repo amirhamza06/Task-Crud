@@ -1,26 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <title>Contacts</title>
-</head>
-<body>
-    <nav class="navbar navbar-expand-sm bg-dark">
-
-        <!-- Links -->
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link text-light" href="/dashboard">Home</a>
-          </li>
-        </ul>
-      
-      </nav>
+@extends('layouts.app1')
+@section('main')
     <div class="container">
         <div class="text-right">
             <a href="/contacts/create" class="btn btn-dark mt-2">New Contact</a>
@@ -41,7 +20,7 @@
                 @foreach ($contacts as $contact)
                     <tr>
                         <td>{{ $loop->index+1 }}</td>
-                        <td>{{ $contact->name }}</td>
+                        <td><a href="/contacts/{{ $contact->id }}/show" class="text-dark">{{ $contact->name }}</a></td>
                         <td>{{ $contact->email }}</td>
                         <td>{{ $contact->phone }}</td>
                         <td>{{ $contact->notes }}</td>
@@ -57,6 +36,6 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $contacts->links() }}
     </div>
-</body>
-</html>
+@endsection

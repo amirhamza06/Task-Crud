@@ -11,8 +11,8 @@ class ContactController extends Controller
 {
     public function index()
     {
-        $contacts=Contact::get();
-        return view('contacts.index',['contacts'=>$contacts]);
+        
+        return view('contacts.index',['contacts'=>Contact::latest()->paginate(5)]);
     }
     public function create()
     {
@@ -77,5 +77,11 @@ class ContactController extends Controller
         $contact->delete();
         
         return back()->withSuccess('Contact is Deleted');
+    }
+    public function show($id)
+    {
+        $contact=Contact::where('id',$id)->first();
+        
+        return view('contacts.show',['contact'=>$contact]);
     }
 }

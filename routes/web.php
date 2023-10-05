@@ -24,6 +24,7 @@ Route::post('/contacts/store',[ContactController::class,'store'])->name('contact
 Route::get('/contacts/{id}/edit',[ContactController::class,'edit'])->name('contacts.edit');
 Route::put('/contacts/{id}/update',[ContactController::class,'update'])->name('contacts.update');
 Route::delete('/contacts/{id}/delete',[ContactController::class,'destroy'])->name('contacts.delete');
+Route::get('/contacts/{id}/show',[ContactController::class,'show'])->name('contacts.show');
 
 
 Route::get('/dashboard', function () {

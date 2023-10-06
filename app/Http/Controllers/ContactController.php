@@ -13,7 +13,6 @@ class ContactController extends Controller
 
     public function search_data(Request $request)
     {
-        
         $data = $request->input('search');
 
         $contacts= DB::table('contacts')->where('name','like','%'. $data . '%')->

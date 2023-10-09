@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 use App\Models\Contact;
+use App\Models\Phone;
 
 
 use Illuminate\Http\Request;
 
 use DB;
+use Symfony\Component\Console\Input\Input;
 
 class ContactController extends Controller
 {
@@ -24,6 +26,7 @@ class ContactController extends Controller
 
     public function index()
     {
+        
         return view('contacts.index',['contacts'=>Contact::latest()->get()]);
     }
 
@@ -47,17 +50,21 @@ class ContactController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.Contact::class],
-            'phone' => ['required'],
+            'inputs.*.phone'=>['required'],['inputs.*.phone' => 'The name field is required'],
             'notes' => ['required','max:256']]);
+        
         $contact = new Contact;
         $contact->name=$request->name;
         $contact->email=$request->email;
-        $contact->phone=$request->phone;
+
+        foreach ($request->inputs as $key => $value) {
+            $contact->phone=$request->value;
+        }
         $contact->notes=$request->notes;
 
         $contact->save();
-        return back()->withSuccess('Contact is created'); 
-
+        return back()->withSuccess('Contact is created');
+        
     }
 
     public function edit($id)

@@ -28,7 +28,14 @@
                         <td>{{ $loop->index+1 }}</td>
                         <td><a href="/contacts/{{ $contacts->id }}/show" class="text-dark">{{ $contacts->name }}</a></td>
                         <td>{{ $contacts->email }}</td>
-                        <td>{{ $contacts->phone }}</td>
+                        <td>    
+                           @foreach ($contacts->phone as $item)
+                               <li>
+                                    {{ $item->phone }}
+                               </li>
+                           @endforeach
+                        </td>
+                        
                         <td>{{ $contacts->notes }}</td>
                         <td>
                             <a href="/contacts/{{ $contacts->id }}/edit" class="btn btn-dark btn-sm">Edit</a>

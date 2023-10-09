@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PhoneController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,9 @@ use App\Http\Controllers\ContactController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/phone-form', [PhoneController::class, 'create']);
+Route::post('/store-input-fields', [PhoneController::class, 'store']);
+
 
 Route::get('/', function () {
     return view('welcome');

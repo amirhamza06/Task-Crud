@@ -21,18 +21,13 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label>Phone</label>
-                            {{-- <table class="table table-bordered" id="dynamicAddRemove">
-                                <tr>
-                                    <td><input type="text" name="moreFields[0][phone]" placeholder="Enter Phone" class="form-control" />
-                                    </td>
-                                    <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Add Phone</button></td>
-                                </tr>
-                            </table> --}}
-                            <input type="text" name="phone" class="form-control" value="{{ old('phone') }}"/>
-                            @if ($errors->has('phone'))
-                                <span class="text-danger">{{ $errors->first('phone') }}</span>
-                            @endif
+                           <table class="table table-bordered" id="table">
+                            <tr>
+                                <legend>Phone numbers</legend>
+                                <td><input type="text" name="inputs[0][phone]" placeholder="Enter Your Phone" class="form-control" value="{{ old('phone')}}"/> </td>
+                                <td><button type="button" name="add" id="add" class="btn btn-success ">Add More</button></td>
+                           </tr>
+                           </table>
                         </div>
                         <div class="form-group">
                             <label>Notes</label>
@@ -47,4 +42,22 @@
             </div>
         </div>
     </div>
+    <script>
+        var i=0;
+        $('#add').click(function(){
+            ++i;
+            $('#table').append(
+                `<tr>
+                    <td>
+                        <input type="text" name="inputs[`+i+`][phone]" placeholder="Enter Your Phone" class="form-control"/>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger remove-table-row">Remove</button>
+                    </td>
+                </tr>`);
+        });
+        $(document).on('click','.remove-table-row',function(){
+            $(this).parents('tr').remove();
+        })
+    </script>
 @endsection

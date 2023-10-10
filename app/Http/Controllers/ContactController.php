@@ -50,19 +50,21 @@ class ContactController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.Contact::class],
-            'inputs.*.phone'=>['required'],['inputs.*.phone' => 'The name field is required'],
+            'inputs.*.phonelist'=>['required'],['inputs.*.phonelist' => 'The name field is required'],
             'notes' => ['required','max:256']]);
         
         $contact = new Contact;
         $contact->name=$request->name;
         $contact->email=$request->email;
+        $contact->notes=$request->notes;
+        $contact->save();
 
         foreach ($request->inputs as $key => $value) {
-            $contact->phone=$request->value;
+            $phone = new Phone;
+            $phone->phonelist=$value;
+            $phone->contact_id=$contact->id;
+            $phone->save();
         }
-        $contact->notes=$request->notes;
-
-        $contact->save();
         return back()->withSuccess('Contact is created');
         
     }
@@ -76,9 +78,6 @@ class ContactController extends Controller
     public function update(Request $request,$id)
     {
 
-
-        
-        
         $contact=Contact::where('id',$id)->first();
 
         $contact->name=$request->name;

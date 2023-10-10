@@ -29,11 +29,12 @@
                         <td><a href="/contacts/{{ $contacts->id }}/show" class="text-dark">{{ $contacts->name }}</a></td>
                         <td>{{ $contacts->email }}</td>
                         <td>    
-                           @foreach ($contacts->phone as $item)
+                           {{-- @foreach ($contacts->phone as $item)
                                <li>
                                     {{ $item->phone }}
                                </li>
-                           @endforeach
+                           @endforeach --}}
+                           {{ $contact->phone }}
                         </td>
                         
                         <td>{{ $contacts->notes }}</td>

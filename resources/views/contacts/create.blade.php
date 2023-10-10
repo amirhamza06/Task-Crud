@@ -24,7 +24,7 @@
                            <table class="table table-bordered" id="table">
                             <tr>
                                 <legend>Phone numbers</legend>
-                                <td><input type="text" name="inputs[0][phone]" placeholder="Enter Your Phone" class="form-control" value="{{ old('phone')}}"/> </td>
+                                <td><input type="text" name="inputs[0][phonelist]" placeholder="Enter Your Phone" class="form-control" value="{{ old('phonelist')}}"/> </td>
                                 <td><button type="button" name="add" id="add" class="btn btn-success ">Add More</button></td>
                            </tr>
                            </table>
@@ -49,7 +49,7 @@
             $('#table').append(
                 `<tr>
                     <td>
-                        <input type="text" name="inputs[`+i+`][phone]" placeholder="Enter Your Phone" class="form-control"/>
+                        <input type="text" name="inputs[`+i+`][phonelist]" placeholder="Enter Your Phone" class="form-control"/>
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger remove-table-row">Remove</button>

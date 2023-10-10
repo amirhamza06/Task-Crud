@@ -6,6 +6,7 @@ class Phone extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'phonelist'
+        'phonelist',
+        'contact_id'
     ];    
 }

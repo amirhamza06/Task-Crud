@@ -18,7 +18,7 @@ class ContactController extends Controller
         $data = $request->input('search');
 
         $contacts= DB::table('contacts')->where('name','like','%'. $data . '%')->
-        orWhere('email','like','%'. $data . '%')->orWhere('phone','like','%'. $data . '%')
+        orWhere('email','like','%'. $data . '%')->orWhere('number','like','%'. $data . '%')
         ->get();
         return view('contacts.index',compact('contacts'));
         
@@ -27,7 +27,7 @@ class ContactController extends Controller
     public function index()
     {
         
-        return view('contacts.index',['contacts'=>Contact::latest()->get()]);
+        return view('contacts.index',['contacts'=>Contact::latest()->get()],['phones'=>Phone::latest()->get()]);
     }
 
     public function create()
@@ -36,35 +36,40 @@ class ContactController extends Controller
     }
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'moreFields.*.phone' => 'required'
-        // ]);
-     
-        // foreach ($request->moreFields as $key => $value) {
-        //     Contact::create($value);
-        // }
-     
-        // return back()->with('success', 'New Contact has been added.');
-
-        
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.Contact::class],
-            'inputs.*.phonelist'=>['required'],['inputs.*.phonelist' => 'The name field is required'],
-            'notes' => ['required','max:256']]);
-        
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:'.Contact::class],
+        'inputs.*.number'=>['required'],['inputs.*.number' => 'The name field is required'],
+        'notes' => ['required','max:256']
+        ]);
+
         $contact = new Contact;
+        $contact->phone->create($request->only('number'));
+
+        $request->contact()->create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'notes' => $request->notes
+        ]);
+
+        $request->contact()->phone()->create([
+            'number' => $request->number,
+            
+        ]);
+        
+        // Remove empty strings in phone_restrictions array, remove repeated numbers
+        if (!empty($contact['number'])) {
+            $contact['number'] = array_filter($contact['number'], static function ($item) {
+                return !empty($item);
+            });
+            $contact['number'] = array_unique($contact['number']);
+        }
+
         $contact->name=$request->name;
         $contact->email=$request->email;
         $contact->notes=$request->notes;
-        $contact->save();
-
-        foreach ($request->inputs as $key => $value) {
-            $phone = new Phone;
-            $phone->phonelist=$value;
-            $phone->contact_id=$contact->id;
-            $phone->save();
-        }
+        
+        $contact->save(); 
         return back()->withSuccess('Contact is created');
         
     }

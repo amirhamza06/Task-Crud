@@ -20,12 +20,8 @@ class Contact extends Model
         'user_id',
     ];
 
-    protected function phone(): Attribute{
-        return Attribute::make(
-            get: fn($value) => json_decode($value,true),
-            set: fn ($value) => json_encode($value,true),
-
-        );
+    public function phone() {
+        return $this->belongsTo(Phone::class);
     }
 
     protected static function boot()

@@ -34,7 +34,9 @@
                                     {{ $item->phone }}
                                </li>
                            @endforeach --}}
-                           {{ $contact->phone }}
+                           
+                                    {{ $contacts->phone->number }}
+                              
                         </td>
                         
                         <td>{{ $contacts->notes }}</td>
